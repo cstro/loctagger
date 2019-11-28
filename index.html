@@ -7,6 +7,7 @@
   <title>Tag a location</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
 
   <style>
     body {
@@ -55,6 +56,9 @@
 </head>
 <body>
   <main class="main" id="app">
+
+    <div>Last updated time: {{ animatedTime }}</div>
+
     <button @click="clear">Remove all</button>
 
     <h2>Add</h2>
@@ -111,6 +115,7 @@
         notes: '',
         currentLatitude: 0,
         currentLongitude: 0,
+        lastUpdateTime: 0,
         items: {}
       },
       computed: {
@@ -120,11 +125,19 @@
 
         count: function () {
           return this.itemsArr.length
+        },
+
+        animatedTime: function () {
+          return this.lastUpdateTime.toFixed(0)
         }
       },
       watch: {
         items: function (newItems) {
           localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(newItems))
+        },
+
+        lastUpdateTime: function(newValue) {
+          TweenLite.to(this.$data, 0.5, { animatedTime: newValue });
         }
       },
       methods: {
@@ -156,7 +169,7 @@
         },
 
         updateCurrentPos: function (pos) {
-          console.log('update')
+          this.lastUpdateTime = genTimestamp()
           this.currentLatitude = pos.coords.latitude
           this.currentLongitude = pos.coords.longitude
         },

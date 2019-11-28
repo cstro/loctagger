@@ -116,6 +116,7 @@
         currentLatitude: 0,
         currentLongitude: 0,
         lastUpdateTime: 0,
+        tweenTime: 0,
         items: {}
       },
       computed: {
@@ -128,7 +129,7 @@
         },
 
         animatedTime: function () {
-          return this.lastUpdateTime.toFixed(0)
+          return this.tweenTime.toFixed(0)
         }
       },
       watch: {
@@ -137,7 +138,7 @@
         },
 
         lastUpdateTime: function(newValue) {
-          TweenLite.to(this.$data, 0.5, { animatedTime: newValue });
+          TweenLite.to(this.$data, 0.5, { tweenTime: newValue });
         }
       },
       methods: {

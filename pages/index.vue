@@ -163,6 +163,10 @@ textarea {
   margin-bottom: 10px;
 }
 
+h2 {
+  font-size: 32px;
+}
+
 .hidden {
   display: none;
 }

@@ -8,10 +8,10 @@
 
     <form @submit.prevent="save">
       <label for="input-label">Label:</label>
-      <input required id="input-label" name="label" v-model="label" />
+      <input required id="input-label" name="label" v-model="label" class="input" />
 
       <label for="input-notes">Notes:</label>
-      <textarea id="input-notes" name="notes" v-model="notes"></textarea>
+      <textarea id="input-notes" name="notes" v-model="notes" class="input"></textarea>
 
       <div class="current-coords">
         <div>{{ currentLatitude }} | {{ currentLongitude }}</div>
@@ -37,61 +37,61 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
-import gsap from 'gsap'
+import debounce from "lodash.debounce";
+import gsap from "gsap";
 
-const LOCAL_STORE_KEY = 'store'
+const LOCAL_STORE_KEY = "store";
 
 function genTimestamp() {
-  return +new Date()
+  return +new Date();
 }
 
 function loadItemsFromStoreage() {
-  const items = localStorage.getItem(LOCAL_STORE_KEY)
-  return items ? JSON.parse(items) : {}
+  const items = localStorage.getItem(LOCAL_STORE_KEY);
+  return items ? JSON.parse(items) : {};
 }
 
 export default {
   data() {
     return {
-      label: '',
-      notes: '',
+      label: "",
+      notes: "",
       currentLatitude: 0,
       currentLongitude: 0,
       lastUpdateTime: 0,
       tweenTime: 0,
       items: {}
-    }
+    };
   },
   computed: {
     itemsArr() {
-      return Object.values(this.items)
+      return Object.values(this.items);
     },
 
     count() {
-      return this.itemsArr.length
+      return this.itemsArr.length;
     },
 
     animatedTime() {
-      return this.tweenTime.toFixed(0)
+      return this.tweenTime.toFixed(0);
     },
 
     mapLink() {
-      return `https://www.google.com/maps/search/?api=1&query=${this.currentLatitude},${this.currentLongitude}`
+      return `https://www.google.com/maps/search/?api=1&query=${this.currentLatitude},${this.currentLongitude}`;
     }
   },
   watch: {
     items(newItems) {
-      localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(newItems))
+      localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(newItems));
     },
 
     lastUpdateTime(newValue) {
-      gsap.to(this.$data, 0.5, { tweenTime: newValue })
+      gsap.to(this.$data, 0.5, { tweenTime: newValue });
     }
   },
   methods: {
     save() {
-      const timestamp = genTimestamp()
+      const timestamp = genTimestamp();
       const item = {
         key: timestamp,
         timestamp,
@@ -99,45 +99,45 @@ export default {
         notes: this.notes,
         latitude: this.currentLatitude,
         longitude: this.currentLongitude
-      }
+      };
 
       this.items = {
         [timestamp]: item,
         ...this.items
-      }
+      };
 
-      this.label = ''
-      this.notes = ''
+      this.label = "";
+      this.notes = "";
     },
 
     remove(key) {
-      const copy = { ...this.items }
-      delete copy[key]
-      this.items = copy
+      const copy = { ...this.items };
+      delete copy[key];
+      this.items = copy;
     },
 
     updateCurrentPos(pos) {
-      this.lastUpdateTime = genTimestamp()
-      this.currentLatitude = pos.coords.latitude
-      this.currentLongitude = pos.coords.longitude
+      this.lastUpdateTime = genTimestamp();
+      this.currentLatitude = pos.coords.latitude;
+      this.currentLongitude = pos.coords.longitude;
     },
 
     clearForm() {
-      this.label = ''
-      this.notes = ''
+      this.label = "";
+      this.notes = "";
     },
 
     clear() {
-      localStorage.removeItem(LOCAL_STORE_KEY)
-      this.items = {}
+      localStorage.removeItem(LOCAL_STORE_KEY);
+      this.items = {};
     }
   },
   mounted() {
-    this.items = loadItemsFromStoreage()
+    this.items = loadItemsFromStoreage();
 
-    navigator.geolocation.watchPosition(debounce(this.updateCurrentPos, 500))
+    navigator.geolocation.watchPosition(debounce(this.updateCurrentPos, 500));
   }
-}
+};
 </script>
 
 <style>
@@ -183,5 +183,9 @@ textarea {
 .current-coords {
   margin-bottom: 15px;
   text-align: center;
+}
+
+.input {
+  border: 1px solid #ddd;
 }
 </style>

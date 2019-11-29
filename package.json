@@ -1,0 +1,30 @@
+{
+  "name": "loctagger",
+  "version": "1.0.0",
+  "description": "Location Tagging Webapp",
+  "author": "Chris Stroud",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "gsap": "^3.0.1",
+    "lodash.debounce": "^4.0.8",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^1.0.0",
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-jest": "^24.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^24.1.0",
+    "prettier": "^1.16.4",
+    "vue-jest": "^4.0.0-0"
+  }
+}

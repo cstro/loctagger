@@ -72,6 +72,7 @@
 
       <div class="current-coords">
         <div>{{ currentLatitude }} | {{ currentLongitude }}</div>
+        <a :href="mapLink">Show on map</a>
       </div>
 
       <button>Save</button>
@@ -130,6 +131,10 @@
 
         animatedTime: function () {
           return this.tweenTime.toFixed(0)
+        },
+
+        mapLink: function () {
+          return `https://www.google.com/maps/search/?api=1&query=${this.currentLatitude},${this.currentLongitude}`
         }
       },
       watch: {
